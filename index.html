@@ -1,605 +1,239 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Trắc nghiệm Pháp luật đại cương - 100 câu</title>
-<style>
-  :root {
-    --bg:#f3f4f6; --card:#fff; --text:#222; --muted:#666;
-    --border:#d8dce1; --primary:#315d86; --primary-dark:#24496b;
-    --good:#16733a; --good-bg:#edf8f1; --bad:#b52f2f; --bad-bg:#fff0f0;
-  }
-  * { box-sizing:border-box; }
-  body {
-    margin:0; background:var(--bg); color:var(--text);
-    font-family:Arial,Helvetica,sans-serif; line-height:1.55;
-  }
-  button,input { font:inherit; }
-  .wrap { width:min(760px,calc(100% - 28px)); margin:0 auto; }
-  .top {
-    background:#fff; border-bottom:1px solid var(--border);
-    padding:14px 0;
-  }
-  .top-row {
-    display:flex; justify-content:space-between; align-items:center; gap:12px;
-  }
-  .site-title { font-weight:700; font-size:17px; }
-  .attempts { color:var(--muted); font-size:14px; }
-  .page { padding:28px 0 50px; }
-  .screen { display:none; }
-  .screen.active { display:block; }
-  .card {
-    background:var(--card); border:1px solid var(--border);
-    border-radius:8px; padding:24px;
-  }
-  h1 { margin:0 0 8px; font-size:28px; }
-  h2 { margin:0 0 10px; font-size:22px; }
-  .desc { color:var(--muted); margin:0 0 20px; }
-  .info {
-    display:grid; grid-template-columns:1fr 1fr; gap:10px; margin:18px 0;
-  }
-  .info-box {
-    border:1px solid var(--border); border-radius:6px; padding:12px;
-    background:#fafafa;
-  }
-  .info-label { color:var(--muted); font-size:13px; }
-  .info-value { font-weight:700; margin-top:2px; }
-  .btn {
-    border:0; border-radius:6px; padding:11px 18px;
-    cursor:pointer; font-weight:700;
-  }
-  .btn-primary { background:var(--primary); color:#fff; }
-  .btn-primary:hover { background:var(--primary-dark); }
-  .btn-secondary { background:#eef0f2; color:#222; border:1px solid var(--border); }
-  .btn:disabled { opacity:.55; cursor:not-allowed; }
-  .menu-buttons { display:grid; gap:10px; margin-top:18px; }
-  .question-card {
-    background:#fff; border:1px solid var(--border);
-    border-radius:8px; padding:22px;
-  }
-  .question-number {
-    color:var(--muted); font-size:14px; margin-bottom:5px;
-  }
-  .question-text { font-size:18px; font-weight:700; margin:0 0 18px; }
-  .options { display:grid; gap:9px; }
-  .option {
-    width:100%; text-align:left; border:1px solid var(--border);
-    background:#fff; border-radius:6px; padding:12px 14px;
-    cursor:pointer; color:var(--text);
-  }
-  .option:hover:not(:disabled) { background:#f7f8fa; }
-  .option:disabled { cursor:default; }
-  .option.correct { border-color:var(--good); background:var(--good-bg); color:#145e31; }
-  .option.incorrect { border-color:var(--bad); background:var(--bad-bg); color:#922727; }
-  .feedback {
-    display:none; margin-top:15px; padding:12px 14px;
-    border-radius:6px; border:1px solid var(--border);
-  }
-  .feedback.show { display:block; }
-  .feedback.good { border-color:var(--good); background:var(--good-bg); color:#145e31; }
-  .feedback.bad { border-color:var(--bad); background:var(--bad-bg); color:#922727; }
-  .quiz-footer {
-    display:flex; justify-content:space-between; align-items:center;
-    gap:10px; margin-top:14px;
-  }
-  .progress { color:var(--muted); font-size:14px; }
-  .countdown {
-    display:inline-block; min-width:42px; text-align:center;
-    font-weight:700; color:var(--primary);
-  }
-  .reference-warning {
-    margin:8px 0 20px; padding:10px 12px;
-    border:1px solid #e0c98a; background:#fffaf0;
-    border-radius:6px; color:#6d571c; font-size:13px;
-  }
-  .result-score { font-size:38px; font-weight:700; margin:6px 0; }
-  .result-note { color:var(--muted); }
-  .wrong-list {
-    margin-top:18px; border-top:1px solid var(--border); padding-top:15px;
-  }
-  .wrong-item { padding:9px 0; border-bottom:1px solid #eee; }
-  .modal {
-    position:fixed; inset:0; background:rgba(0,0,0,.42);
-    display:flex; align-items:center; justify-content:center;
-    padding:18px; z-index:100;
-  }
-  .modal.hidden { display:none; }
-  .modal-box {
-    width:min(430px,100%); background:#fff; border-radius:8px;
-    border:1px solid var(--border); padding:22px;
-  }
-  .modal-box h2 { margin-top:0; }
-  .modal-box input {
-    width:100%; padding:11px; border:1px solid var(--border);
-    border-radius:6px; margin:8px 0 12px;
-  }
-  .small { color:var(--muted); font-size:13px; }
-  .global-loading { color:var(--muted); }
-  .global-error { color:#a33; font-size:14px; }
-  @media (max-width:600px) {
-    .info { grid-template-columns:1fr; }
-    .card,.question-card { padding:18px; }
-    h1 { font-size:24px; }
-    .question-text { font-size:17px; }
-    .top-row { align-items:flex-start; flex-direction:column; }
-  }
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hệ thống Artist</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #f4f4f9; display: flex; justify-content: center; padding-top: 40px; }
+    .card { background: #fff; padding: 25px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); width: 100%; max-width: 400px; margin-bottom: 20px; }
+    h2 { margin-top: 0; color: #333; }
+    .input-group { margin-bottom: 15px; }
+    label { display: block; margin-bottom: 5px; font-weight: bold; font-size: 14px; }
+    input { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
+    .warning { color: #d9534f; font-size: 12px; margin-top: 4px; font-style: italic; }
+    .captcha-box { display: flex; gap: 10px; align-items: center; margin-bottom: 15px; }
+    .captcha-code { background: #e0e0e0; padding: 10px; font-weight: bold; letter-spacing: 3px; border-radius: 4px; user-select: none; font-family: monospace; }
+    button { width: 100%; padding: 10px; background: #0275d8; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 16px; }
+    button:hover { background: #025aa5; }
+    .tab-btn { background: none; color: #0275d8; border: none; cursor: pointer; text-decoration: underline; padding: 0; font-size: 14px; }
+    #main-page { display: none; text-align: center; }
+    .alert-success { background: #d4edda; color: #155724; padding: 15px; border-radius: 4px; border: 1px solid #c3e6cb; line-height: 1.5; }
+  </style>
 </head>
 <body>
 
-<header class="top">
-  <div class="wrap top-row">
-    <div class="site-title">PHÁP LUẬT ĐẠI CƯƠNG</div>
-    <div class="attempts">Lượt làm trên thiết bị này: <b id="attemptCount">0</b></div>
+<div id="auth-container">
+  <!-- FORM ĐĂNG KÝ -->
+  <div id="register-card" class="card">
+    <h2>Đăng ký Artist</h2>
+    <form id="register-form">
+      <div class="input-group">
+        <label>Tên Artist</label>
+        <input type="text" id="reg-username" required>
+      </div>
+      <div class="input-group">
+        <label>Mật khẩu</label>
+        <input type="password" id="reg-password" required>
+        <div class="warning">Không sử dụng tài khoản/mật khẩu đã có sẵn! Chúng tôi không thu thập dữ liệu!</div>
+      </div>
+      <div class="input-group">
+        <label>Link Facebook</label>
+        <input type="url" id="reg-facebook" placeholder="https://facebook.com/..." required>
+      </div>
+      <div class="input-group">
+        <label>Xác minh Captcha</label>
+        <div class="captcha-box">
+          <span id="reg-captcha-code" class="captcha-code"></span>
+          <button type="button" onclick="generateCaptcha('reg')" style="width:auto; padding:5px 10px; font-size:12px;">Đổi</button>
+        </div>
+        <input type="text" id="reg-captcha-input" placeholder="Nhập đúng 10 ký tự trên" required>
+      </div>
+      <button type="submit">Đăng ký</button>
+    </form>
+    <p style="text-align: center; margin-top: 15px;">
+      Đã có tài khoản? <button class="tab-btn" onclick="toggleAuth('login')">Đăng nhập</button>
+    </p>
   </div>
-</header>
 
-<main class="page">
-  <div class="wrap">
-
-    <section id="menuScreen" class="screen active">
-      <div class="card">
-        <h1>Trắc nghiệm Pháp luật đại cương</h1>
-        <div class="reference-warning">
-          ĐÂY LÀ TÀI LIỆU THAM KHẢO ĐÃ ĐƯỢC LỌC QUA NHƯNG CŨNG CÓ THỂ MẮC LỖI.
-          BÁO SAI CHO ADMIN THÔNG QUA ZALO
-        </div>
-        <p class="desc">100 câu hỏi · 100 điểm · Mỗi câu đúng được 1 điểm.</p>
-
-        <div class="info">
-          <div class="info-box">
-            <div class="info-label">Người làm</div>
-            <div class="info-value" id="displayName">Chưa nhập</div>
-          </div>
-          <div class="info-box">
-            <div class="info-label">Tiến độ lượt hiện tại</div>
-            <div class="info-value">0 / 100 câu</div>
-          </div>
-          <div class="info-box" style="grid-column:1 / -1;">
-            <div class="info-label">TỔNG LƯỢT LÀM BÀI TRÊN WEB</div>
-            <div class="info-value" id="globalAttempts" style="font-size:28px;">Đang tải...</div>
-          </div>
-        </div>
-
-        <div class="menu-buttons">
-          <button class="btn btn-primary" id="startBtn">Bắt đầu làm bài</button>
-          <button class="btn btn-secondary" id="changeNameBtn">Đổi tên</button>
-        </div>
-
-        <p class="small" style="margin-top:18px">
-          Chọn đáp án để biết đúng/sai ngay. Nếu đúng, hệ thống tự chuyển sau 5 giây hoặc bạn có thể bấm “Câu tiếp theo” ngay. Tổng lượt chung chỉ tăng khi hoàn thành đủ 100 câu.
-        </p>
+  <!-- FORM ĐĂNG NHẬP -->
+  <div id="login-card" class="card" style="display: none;">
+    <h2>Đăng nhập Artist</h2>
+    <form id="login-form">
+      <div class="input-group">
+        <label>Tên Artist</label>
+        <input type="text" id="login-username" required>
       </div>
-    </section>
-
-    <section id="quizScreen" class="screen">
-      <div class="question-card">
-        <div class="question-number" id="questionNumber">Câu 1 / 100</div>
-        <p class="question-text" id="questionText"></p>
-
-        <div class="options" id="options"></div>
-
-        <div id="feedback" class="feedback"></div>
-
-        <div class="quiz-footer">
-          <div class="progress" id="quizProgress">Đúng: 0 · Sai: 0</div>
-          <button class="btn btn-primary" id="nextBtn" disabled>Câu tiếp theo</button>
-        </div>
+      <div class="input-group">
+        <label>Mật khẩu</label>
+        <input type="password" id="login-password" required>
+        <div class="warning">Không sử dụng tài khoản/mật khẩu đã có sẵn! Chúng tôi không thu thập dữ liệu!</div>
       </div>
-    </section>
-
-    <section id="resultScreen" class="screen">
-      <div class="card">
-        <h2>Hoàn thành bài</h2>
-        <div class="result-score" id="resultScore">0 / 100 điểm</div>
-        <div class="result-note" id="resultNote"></div>
-
-        <div class="info">
-          <div class="info-box">
-            <div class="info-label">Người làm</div>
-            <div class="info-value" id="resultName"></div>
-          </div>
-          <div class="info-box">
-            <div class="info-label">Tổng lượt trên thiết bị này</div>
-            <div class="info-value" id="resultAttempts"></div>
-          </div>
-          <div class="info-box">
-            <div class="info-label">TỔNG LƯỢT CHUNG TRÊN WEB</div>
-            <div class="info-value" id="resultGlobalAttempts">Đang cập nhật...</div>
-          </div>
+      <div class="input-group">
+        <label>Xác minh Captcha</label>
+        <div class="captcha-box">
+          <span id="login-captcha-code" class="captcha-code"></span>
+          <button type="button" onclick="generateCaptcha('login')" style="width:auto; padding:5px 10px; font-size:12px;">Đổi</button>
         </div>
-
-        <div class="menu-buttons">
-          <button class="btn btn-primary" id="newAttemptBtn">Làm lượt mới</button>
-          <button class="btn btn-secondary" id="backMenuBtn">Về menu</button>
-        </div>
-
-        <div class="wrong-list" id="wrongList"></div>
+        <input type="text" id="login-captcha-input" placeholder="Nhập đúng 10 ký tự trên" required>
       </div>
-    </section>
-
-  </div>
-</main>
-
-<div id="nameModal" class="modal hidden">
-  <div class="modal-box">
-    <h2>Nhập tên</h2>
-    <p id="modalText">Tên của bạn sẽ được lưu trên trình duyệt để những lần sau không cần nhập lại.</p>
-    <input id="nameInput" type="text" maxlength="80" placeholder="Nhập tên của bạn">
-    <button class="btn btn-primary" id="saveNameBtn">Lưu tên</button>
+      <button type="submit">Đăng nhập</button>
+    </form>
+    <p style="text-align: center; margin-top: 15px;">
+      Chưa có tài khoản? <button class="tab-btn" onclick="toggleAuth('register')">Đăng ký ngay</button>
+    </p>
   </div>
 </div>
 
+<!-- TRANG CHÍNH SAU KHI THÀNH CÔNG -->
+<div id="main-page" class="card">
+  <h2>Trang Chủ Artist</h2>
+  <div class="alert-success">
+    Chúc mừng bạn đăng ký thành công, uuid của bạn là <b id="user-uuid">...</b>!<br>
+    Chúng tôi sẽ liên hệ bạn thông qua link facebook bạn đã cung cấp!
+  </div>
+  <button onclick="location.reload()" style="margin-top: 20px; background: #6c757d;">Đăng xuất</button>
+</div>
+
 <script>
-const QUESTIONS = [{"n": 1, "q": "Nhà nước do giai cấp thống trị lập nên để bảo vệ quyền và lợi ích của giai cấp mình là quan điểm của học thuyết nào?", "opts": {"A": "Mác-Lênin", "B": "Thần quyền", "C": "Gia trưởng", "D": "Khế ước xã hội"}}, {"n": 2, "q": "Tổ chức nào có quyền phân chia lãnh thổ thành các đơn vị hành chính?", "opts": {"A": "Hội phụ nữ", "B": "Mặt trận tổ quốc", "C": "Công đoàn", "D": "Nhà nước"}}, {"n": 3, "q": "Kiểu Nhà nước nào mà trong đó giai cấp thống trị chiếm đại đa số trong xã hội?", "opts": {"A": "Chủ nô", "B": "Phong kiến", "C": "Tư sản", "D": "Xã hội chủ nghĩa"}}, {"n": 4, "q": "Cách thức và trình tự thành lập ra các cơ quan quyền lực tối cao của nhà nước, đó là:", "opts": {"A": "Hình thức chính thể", "B": "Hình thức cấu trúc nhà nước", "C": "Chế độ chính trị", "D": "Hình thức nhà nước"}}, {"n": 5, "q": "Hình thức cấu trúc Nhà nước đơn nhất có đặc điểm gì?", "opts": {"A": "Một hệ thống pháp luật", "B": "Hai hệ thống cơ quan Nhà nước", "C": "Lãnh thổ có chủ quyền riêng", "D": "Tất cả đều đúng"}}, {"n": 6, "q": "Hình thức chính thể nào sau đây không tồn tại chức danh Thủ Tướng?", "opts": {"A": "Cộng hòa đại nghị", "B": "Quân chủ lập hiến", "C": "Cộng hòa Tổng thống", "D": "Cộng hòa lưỡng tính (hỗn hợp)"}}, {"n": 7, "q": "Hình thức chính thể cộng hòa dân chủ nhân dân là hình thức chính thể của quốc gia nào?", "opts": {"A": "Việt Nam", "B": "Pháp", "C": "Đức", "D": "Nhật"}}, {"n": 8, "q": "Hình thức cấu trúc của Nhà nước Việt nam là:", "opts": {"A": "Nhà nước đơn nhất", "B": "Nhà nước liên bang", "C": "Nhà nước liên minh", "D": "Tất cả đều đúng"}}, {"n": 9, "q": "Cơ quan quyền lực Nhà nước Việt Nam là:", "opts": {"A": "Quốc hội", "B": "Hội đồng nhân dân", "C": "Chính phủ", "D": "Câu A và B đúng"}}, {"n": 10, "q": "Cơ quan thường trực của Quốc hội là:", "opts": {"A": "Chính phủ", "B": "Uỷ ban thường vụ Quốc hội", "C": "Hội đồng nhân dân các cấp", "D": "Uỷ ban nhân dân các cấp"}}, {"n": 11, "q": "Cơ quan quản lý Nhà nước cấp trung ương là:", "opts": {"A": "Bộ và các cơ quan ngang bộ", "B": "Uỷ ban thường vụ quốc hội", "C": "Toà án nhân dân tối cao", "D": "Viện kiểm sát nhân dân tối cao"}}, {"n": 12, "q": "Cơ quan nào sau đây có thẩm quyền quyết định việc chia, tách đơn vị hành chính cấp tỉnh:", "opts": {"A": "Quốc hội", "B": "Chính phủ", "C": "Chủ tịch nước", "D": "Bộ Chính trị"}}, {"n": 13, "q": "Cơ quan nào sau đây có thẩm quyền quyết định đại xá:", "opts": {"A": "Quốc hội", "B": "Chính phủ", "C": "Chủ tịch nước", "D": "Thủ tướng Chính phủ"}}, {"n": 14, "q": "Tính quy phạm phổ biến là đặc tính của:", "opts": {"A": "Pháp luật", "B": "Đạo đức", "C": "Tôn giáo", "D": "Tổ chức xã hội"}}, {"n": 15, "q": "Hình thức pháp luật chủ yếu được áp dụng ở Việt Nam là:", "opts": {"A": "Văn bản quy phạm pháp luật", "B": "Tập quán pháp", "C": "Án lệ pháp", "D": "Học thuyết pháp lý"}}, {"n": 16, "q": "Pháp luật phát sinh và tồn tại trong xã hội:", "opts": {"A": "Có nhà nước", "B": "Không có giai cấp", "C": "Không có nhà nước", "D": "Không có nhà nước"}}, {"n": 17, "q": "Pháp luật tác động vào kinh tế:", "opts": {"A": "Tác động tiêu cực", "B": "Tác động tích cực", "C": "Tích cực hoặc tiêu cực", "D": "Tất cả đều sai"}}, {"n": 18, "q": "Việt Nam không áp dụng hình thức pháp luật:", "opts": {"A": "Tiền lệ pháp", "B": "Học thuyết pháp lý", "C": "Văn bản quy phạm pháp luật", "D": "Câu A và B đúng"}}, {"n": 19, "q": "Quy phạm pháp luật là những quy tắc xử sự mang tính bắt buộc thể hiện ý chí của:", "opts": {"A": "Nhà nước", "B": "Tổ chức xã hội", "C": "Tổ chức chính trị - xã hội", "D": "Tổ chức kinh tế"}}, {"n": 20, "q": "Nghị định là văn bản quy phạm pháp luật do cơ quan Nhà nước có thẩm quyền ban hành là:", "opts": {"A": "Chính phủ", "B": "Uỷ ban thường vụ quốc hội", "C": "Thủ tướng chính phủ", "D": "Chủ tịch nước"}}, {"n": 21, "q": "Bộ phận nào của quy phạm pháp luật nêu lên cách thức xử sự cho chủ thể được làm, không được làm, phải làm:", "opts": {"A": "Giả định", "B": "Quy định", "C": "Chế tài", "D": "Tất cả đều sai"}}, {"n": 22, "q": "Bộ phận đảm bảo cho quy phạm pháp luật được thực hiện nghiêm chỉnh:", "opts": {"A": "Quy định", "B": "Giả định", "C": "Chế tài", "D": "Câu A và B đúng"}}, {"n": 23, "q": "Thời điểm năng lực pháp lụât và năng lực hành vi của Pháp nhân được Nhà nước công nhận là:", "opts": {"A": "Cùng một thời điểm", "B": "Năng lực pháp luật được công nhận trước năng lực hành vi", "C": "Năng lực hành vi được công nhận trước năng lực pháp luật", "D": "Câu a & c đều đúng"}}, {"n": 24, "q": "Nội dung của quan hệ pháp luật là:", "opts": {"A": "Quyền và nghĩa vụ của các chủ thể trong quan hệ pháp luật", "B": "Những giá trị mà các chủ thể quan hệ pháp luật muốn đạt được", "C": "Là các bên tham gia vào quan hệ pháp luật", "D": "Là đối tượng mà các chủ thể quan tâm khi tham gia vào quan hệ pháp luật"}}, {"n": 25, "q": "Khi nào pháp nhân có năng lực chủ thể:", "opts": {"A": "Khi Nhà nước cho phép hoặc công nhận sự thành lập của pháp nhân", "B": "Khi tổ chức có đủ số thành viên", "C": "Khi các thành viên thỏa thuận thành lập pháp nhân", "D": "Khi một tổ chức có đủ vốn"}}, {"n": 26, "q": "Khả năng của chủ thể bằng chính hành vi của mình thực hiện được các quyền và nghĩa vụ mà pháp luật quy định, đó là:", "opts": {"A": "Năng lực pháp luật", "B": "Năng lực hành vi", "C": "Năng lực chủ thể", "D": "Tất cả đều đúng"}}, {"n": 27, "q": "Cá nhân có năng lực hành vi đầy đủ khi:", "opts": {"A": "Từ đủ 15 tuổi trở lên", "B": "Từ đủ 21 tuổi trở lên", "C": "Đủ 18 tuổi trở lên", "D": "Từ đủ 6 tuổi trở lên"}}, {"n": 28, "q": "Quan hệ xã hội nào sau đây không phải là quan hệ pháp luật:", "opts": {"A": "Quan hệ vợ – chồng", "B": "Quan hệ mua – bán", "C": "Quan hệ Cha mẹ – con", "D": "Quan hệ tình yêu nam – nữ"}}, {"n": 29, "q": "Tổ chức được thành lập hợp pháp được gọi là:", "opts": {"A": "Pháp nhân", "B": "Thể nhân", "C": "Cá nhân", "D": "Tất cả đều sai"}}, {"n": 30, "q": "Kết hôn là:", "opts": {"A": "Hành vi pháp lý", "B": "Sự biến pháp lý", "C": "Sự kiện thông thường", "D": "Câu a và b đúng"}}, {"n": 31, "q": "Cơ quan thường trực của Quốc hội nước ta là:", "opts": {"A": "Ủy ban Quốc hội", "B": "Ủy ban thường vụ Quốc hội", "C": "Ủy ban kinh tế và ngân sách", "D": "Ủy ban đối nội và đối ngoại"}}, {"n": 32, "q": "Bộ máy nhà nước nói chung thường có mấy hệ thống cơ quan:", "opts": {"A": "Một", "B": "Hai", "C": "Ba", "D": "Bốn"}}, {"n": 33, "q": "Nhà nước Việt Nam dân chủ cộng hòa có chủ quyền quốc gia khi nào?", "opts": {"A": "Năm 1930", "B": "Năm 1945", "C": "Năm 1954", "D": "Năm 1974"}}, {"n": 34, "q": "Chủ tịch nước có quyền:", "opts": {"A": "Quyết định mọi vấn đề quan trọng của đất nước", "B": "Lập hiến và lập pháp", "C": "Thay mặt nhà nước để quyết định mọi vấn đề đối nội và đối ngoại", "D": "Công bố Hiến pháp, luật và pháp lệnh."}}, {"n": 35, "q": "Cơ quan nào trong bộ máy nhà nước Việt Nam có quyền hành pháp:", "opts": {"A": "Quốc hội", "B": "Chính phủ", "C": "Tòa án", "D": "Viện kiểm sát"}}, {"n": 36, "q": "Cơ quan nào trong bộ máy nhà nước Việt Nam có quyền tư pháp:", "opts": {"A": "Quốc hội và Tòa án", "B": "Tòa án và Viện kiểm sát", "C": "Quốc hội và Chính phủ", "D": "Chính phủ và Viện kiểm sát"}}, {"n": 37, "q": "Bộ Công thương là cơ quan trực thuộc của:", "opts": {"A": "Quốc hội", "B": "Ủy ban thường vụ Quốc hội", "C": "Chính phủ", "D": "Cơ quan quyền lực nhà nước"}}, {"n": 38, "q": "Hội đồng nhân dân 02 cấp trong bộ máy nhà nước Việt Nam là:", "opts": {"A": "Do chính phủ bầu ra", "B": "Do nhân dân địa phương bầu ra", "C": "Do Quốc hội bầu ra", "D": "Do ủy ban nhân dân bầu ra."}}, {"n": 39, "q": "Ủy ban nhân dân các cấp trong bộ máy nhà nước Việt Nam là:", "opts": {"A": "Do chính phủ bầu ra", "B": "Do quốc hội bầu ra", "C": "Do Mặt trận Tổ quốc Việt Nam bầu ra", "D": "Do hội đồng nhân dân cùng cấp bầu ra"}}, {"n": 40, "q": "Quốc hội khóa XII của nhà nước ta có nhiệm kỳ:", "opts": {"A": "2 năm", "B": "3 năm", "C": "4 năm", "D": "5 năm"}}, {"n": 41, "q": "Theo quan điểm của chủ nghĩa Mác-Lênin thì nguyên nhân chủ yếu làm xuất hiện Nhà nước là?", "opts": {"A": "Do có sự phân hóa lao động trong xã hội", "B": "Do có sự phân hóa giai cấp và đấu tranh giai cấp trong xã hội", "C": "Do địa hình, khí hậu không thuận lợi nên con người phải hợp sức lại để phát triển sản xuất", "D": "Do các thành viên trong xã hội lập ra"}}, {"n": 42, "q": "Nhà nước chưa tồn tại trong hình thái kinh tế - xã hội nào?", "opts": {"A": "Hình thái kinh tế - xã hội Công xã nguyên thủy", "B": "Hình thái kinh tế - xã hội Cộng sản nguyên thủy", "C": "Hình thái kinh tế - xã hội Cộng sản chủ nghĩa", "D": "Hình thái kinh tế - xã hội Chiếm hữu nô lệ"}}, {"n": 43, "q": "Tổ chức thị tộc trong xã hội Cộng sản nguyên thủy là?", "opts": {"A": "Một tổ chức kinh tế", "B": "Một tập đoàn người có cùng quan hệ huyết thống", "C": "Một xã hội độc lập", "D": "Một đơn vị độc lập"}}, {"n": 44, "q": "Khi nghiên cứu về tổ chức thị tộc thì khẳng định nào sau đây là đúng?", "opts": {"A": "Thị tộc là gia đình trong xã hội Cộng sản nguyên thủy", "B": "Trong thị tộc đã có sự phân công lao động chuyên môn hóa ngành nghề", "C": "Thị tộc là đơn vị kinh tế đầu tiên của xã hội cộng sản nguyên thủy", "D": "Tổ chức thị tộc gắn liền với nền kinh tế sản xuất"}}, {"n": 45, "q": "Theo quan điểm của chủ nghĩa Mác-Lênin về Nhà nước thì?", "opts": {"A": "Nhà nước là hiện tượng tự nhiên", "B": "Nhà nước là hiện tượng xã hội mang tính lịch sử", "C": "Nhà nước là hiện tượng xã hội", "D": "Nhà nước là hiện tượng xuất hiện và tồn tại cùng với sự xuất hiện, tồn tại của lịch sử xã hội loài người"}}, {"n": 46, "q": "Khi nghiên cứu về tổ chức thị tộc thì khẳng định nào sau đây là sai?", "opts": {"A": "Thị tộc là đơn vị kinh tế đầu tiên của xã hội cộng sản nguyên thủy", "B": "Trong thị tộc đã hình thành hội đồng thị tộc", "C": "Trong thị tộc đã hình thành các giai cấp khác nhau", "D": "Thị tộc tồn tại gắn liền với nền kinh tế tự nhiên"}}, {"n": 47, "q": "Những quy phạm xã hội tồn tại trong xã hội cộng sản nguyên thủy là?", "opts": {"A": "Đạo đức, tập quán, pháp luật", "B": "Tập quán, tín điều tôn giáo, luật pháp", "C": "Tín điều tôn giáo, tập quán pháp", "D": "Đạo đức, tập quán, tín điều tôn giáo"}}, {"n": 48, "q": "Trong các quan điểm phi mácxít về nguồn gốc Nhà nước thì quan điểm nào được coi là tiến bộ nhất?", "opts": {"A": "Quan điểm của những nhà nghiên cứu theo thuyết thần học", "B": "Quan điểm của những nhà nghiên cứu theo thuyết gia trưởng", "C": "Quan điểm của những nhà nghiên cứu theo thuyết khế ước xã hội", "D": "Quan điểm của những nhà nghiên cứu theo thuyết bạo lực"}}, {"n": 49, "q": "Đối nội và đối ngoại là những mặt hoạt động chủ yếu của Nhà nước, đó chính là?", "opts": {"A": "Bản chất Nhà nước", "B": "Đặc trưng cơ bản của Nhà nước", "C": "Cách thức tồn tại của Nhà nước", "D": "Chức năng của Nhà nước"}}, {"n": 50, "q": "Việt Nam phối hợp với lực lượng an ninh các quốc gia trong khu vực giải quyết vấn đề tội phạm xuyên quốc gia, đây là hoạt động thể hiện?", "opts": {"A": "Chức năng của Nhà nước", "B": "Chức năng đối ngoại của Nhà nước", "C": "Nhiệm vụ của Nhà nước", "D": "Mối quan hệ của Nhà nước Việt Nam"}}, {"n": 51, "q": "Đẩy mạnh cải cách thủ tục hành chính, tăng cường hiệu quả hoạt động của bộ máy Nhà nước, đặc biệt trong giai đoạn hiện nay là nội dung thuộc về?", "opts": {"A": "Chức năng đối nội của Nhà nước", "B": "Quyền hạn của Nhà nước", "C": "Chức năng Nhà nước", "D": "Nhiệm vụ của Nhà nước"}}, {"n": 52, "q": "Theo Hiến pháp Việt Nam 1992, Thủ tướng Chính phủ Nước CHXHCN Việt Nam:", "opts": {"A": "Do nhân dân bầu", "B": "Do Quốc hội bầu theo sự giới thiệu của Chủ tịch nước", "C": "Do Chủ tịch nước giới thiệu", "D": "Do Chính phủ bầu"}}, {"n": 53, "q": "Văn bản nào có hiệu lực cao nhất trong HTPL Việt Nam:", "opts": {"A": "Pháp lệnh", "B": "Luật", "C": "Hiến pháp", "D": "Nghị quyết"}}, {"n": 54, "q": "Lịch sử xã hội loài người đã và đang trải qua mấy kiểu pháp luật:", "opts": {"A": "2 kiểu pháp luật", "B": "3 kiểu pháp luật", "C": "4 kiểu pháp luật", "D": "5 kiểu pháp luật"}}, {"n": 55, "q": "Đạo luật nào dưới đây quy định một cách cơ bản về chế độ chính trị, chế độ kinh tế, văn hóa, xã hội và tổ chức bộ máy nhà nước:", "opts": {"A": "Luật tổ chức Quốc hội", "B": "Luật tổ chức Chính phủ", "C": "Luật tổ chức Hội đồng nhân dân và UBND", "D": "Hiến pháp"}}, {"n": 56, "q": "Mỗi một điều luật:", "opts": {"A": "Có thể có đầy đủ cả ba yếu tố cấu thành QPPL.", "B": "Có thể chỉ có hai yếu tố cấu thành QPPL", "C": "Có thể chỉ có một yếu tố cấu thành QPPL -> Quy phạm định nghĩa", "D": "Cả A, B và C đều đúng"}}, {"n": 57, "q": "Khẳng định nào là đúng:", "opts": {"A": "Trong các loại nguồn của pháp luật, chỉ có VBPL là nguồn của pháp luật Việt Nam.", "B": "Trong các loại nguồn của pháp luật, chỉ có VBPL và tập quán pháp là nguồn của pháp luật Việt Nam.", "C": "Trong các loại nguồn của pháp luật, chỉ có VBPL và tiền lệ pháp là nguồn của pháp luật Việt Nam.", "D": "Tất Cả đều sai"}}, {"n": 58, "q": "Xét về độ tuổi, người có NLHV dân sự chưa đầy đủ, khi:", "opts": {"A": "Dưới 18 tuổi", "B": "Từ đủ 6 tuổi đến dưới 18 tuổi", "C": "Từ đủ 15 tuổi đến dưới 18 tuổi", "D": "Dưới 21 tuổi"}}, {"n": 59, "q": "Khẳng định nào là đúng:", "opts": {"A": "Muốn trở thành chủ thể QHPL thì trước hết phải là chủ thể pháp luật", "B": "Đã là chủ thể QHPL thì là chủ thể pháp luật", "C": "Đã là chủ thể QHPL thì có thể là chủ thể pháp luật, có thể không phải là chủ thể pháp luật", "D": "Cả A và B"}}, {"n": 60, "q": "Cơ quan thực hiện chức năng thực hành quyền công tố và kiểm sát các hoạt động tư pháp:", "opts": {"A": "Quốc hội", "B": "Chính phủ", "C": "Tòa án nhân dân", "D": "Viện kiểm sát nhân dân"}}, {"n": 61, "q": "Nguyên tắc chung của pháp luật trong nhà nước pháp quyền là:", "opts": {"A": "Cơ quan, công chức nhà nước được làm mọi điều mà pháp luật không cấm; Công dân và các tổ chức khác được làm mọi điều mà pháp luật không cấm", "B": "Cơ quan, công chức nhà nước được làm những gì mà pháp luật cho phép; Công dân và các tổ chức khác được làm mọi điều mà pháp luật không cấm", "C": "Cơ quan, công chức nhà nước được làm mọi điều mà pháp luật không cấm; Công dân và các tổ chức khác được làm những gì mà pháp luật cho phép.", "D": "Cơ quan, công chức nhà nước được làm những gì mà pháp luật cho phép; Công dân và các tổ chức khác được làm những gì mà pháp luật cho phép."}}, {"n": 62, "q": "Cơ quan nào có quyền xét xử tội phạm và tuyên bản án hình sự:", "opts": {"A": "Tòa kinh tế", "B": "Tòa hành chính", "C": "Tòa dân sự", "D": "Tòa hình sự"}}, {"n": 63, "q": "Hình thức ADPL nào cần phải có sự tham gia của nhà nước:", "opts": {"A": "Tuân thủ pháp luật", "B": "Thi hành pháp luật", "C": "Sử dụng pháp luật", "D": "ADPL"}}, {"n": 64, "q": "Hoạt động áp dụng tương tự quy phạm là:", "opts": {"A": "Khi không có QPPL áp dụng cho trường hợp đó.", "B": "Khi có cả QPPL áp dụng cho trường hợp đó và cả QPPL áp dụng cho trường hợp tương tự.", "C": "Khi không có QPPL áp dụng cho trường hợp đó và không có QPPL áp dụng cho trường hợp tương tự.", "D": "Khi không có QPPL áp dụng cho trường hợp đó nhưng có QPPL áp dụng cho trường hợp tương tự."}}, {"n": 65, "q": "Nguyên tắc pháp chế trong tổ chức và hoạt động của bộ máy nhà nước xuất hiện từ khi nào:", "opts": {"A": "Từ khi xuất hiện nhà nước chủ nô", "B": "Từ khi xuất hiện nhà nước phong kiến", "C": "Từ khi xuất hiện nhà nước tư sản", "D": "Từ khi xuất hiện nhà nước XHCN"}}, {"n": 66, "q": "Theo quy định tại Khoản 1, Điều 271, Bộ luật hình sự Việt Nam 1999, nếu tội phạm có khung hình phạt từ 15 năm trở xuống thì thuộc thẩm quyền xét xử của:", "opts": {"A": "Tòa án nhân dân khu vực", "B": "Tòa án nhân dân tỉnh", "C": "Tòa án nhân dân tối cao", "D": "Tất Cả đều đúng"}}, {"n": 67, "q": "Điều kiện để làm phát sinh, thay đổi hay chấm dứt một QHPL:", "opts": {"A": "Khi có QPPL điều chỉnh QHXH tương ứng", "B": "Khi xuất hiện chủ thể pháp luật trong trường hợp cụ thể", "C": "Khi xảy ra SKPL", "D": "Cả A, B và C đều đúng"}}, {"n": 68, "q": "Ủy ban Thường vụ Quốc hội có quyền ban hành những loại VBPL nào:", "opts": {"A": "Luật, nghị quyết", "B": "Luật, pháp lệnh", "C": "Pháp lệnh, nghị quyết", "D": "Pháp lệnh, nghị quyết, nghị định"}}, {"n": 69, "q": "Trong HTPL Việt Nam, để được coi là một ngành luật độc lập khi:", "opts": {"A": "Ngành luật đó phải có đối tượng điều chỉnh", "B": "Ngành luật đó phải có phương pháp điều chỉnh", "C": "Ngành luật đó phải có đầy đủ các VBQPPL", "D": "B đều đúng"}}, {"n": 70, "q": "UBND và chủ tịch UBND các cấp có quyền ban hành những loại VBPL nào:", "opts": {"A": "Nghị định, quyết định", "B": "Quyết định, chỉ thị", "C": "Quyết định, chỉ thị, thông tư", "D": "Nghị định, nghị quyết, quyết định, chỉ thị"}}, {"n": 71, "q": "Theo quy định của Hiến pháp 2013, người có quyền công bố Hiến pháp và luật là:", "opts": {"A": "Chủ tịch Quốc hội", "B": "Chủ tịch nước", "C": "Tổng bí thư", "D": "Thủ tướng chính phủ"}}, {"n": 72, "q": "Có thể thay đổi HTPL bằng cách:", "opts": {"A": "Ban hành mới VBPL", "B": "Sửa đổi, bổ sung các VBPL hiện hành", "C": "Đình chỉ, bãi bỏ các VBPL hiện hành", "D": "Cả A, B và C đều đúng."}}, {"n": 73, "q": "Hội đồng nhân dân các cấp có quyền ban hành loại VBPL nào:", "opts": {"A": "Nghị quyết", "B": "Nghị định", "C": "Nghị quyết, nghị định", "D": "Nghị quyết, nghị định, quyết định"}}, {"n": 74, "q": "Khẳng định nào là đúng:", "opts": {"A": "Mọi hành vi trái pháp luật hình sự được coi là tội phạm", "B": "Mọi tội phạm đều đã có thực hiện hành vi trái pháp luật hình sự", "C": "Trái pháp luật hình sự có thể bị coi là tội phạm, có thể không bị coi là tội phạm", "D": "Cả B và C"}}, {"n": 75, "q": "Tuân thủ pháp luật là:", "opts": {"A": "Hình thức thực hiện những QPPL mang tính chất ngăn cấm bằng hành vi thụ động, trong đó các chủ thể pháp luật kiềm chế không làm những việc mà pháp luật cấm.", "B": "Hình thức thực hiện những quy định trao nghĩa vụ bắt buộc của pháp luật một cách tích cực trong đó các chủ thể thực hiện nghĩa vụ của mình bằng những hành động tích cực.", "C": "Hình thức thực hiện những quy định về quyền chủ thể của pháp luật, trong đó các chủ thể pháp luật chủ động, tự mình quyết định việc thực hiện hay không thực hiện điều mà pháp luật cho phép.", "D": "Cả A và B đều đúng"}}, {"n": 76, "q": "Hình thức trách nhiệm nghiêm khắc nhất theo quy định của pháp luật Việt Nam:", "opts": {"A": "Trách nhiệm hành chính", "B": "Trách nhiệm hình sự", "C": "Trách nhiệm dân sự", "D": "Trách nhiệm kỹ luật"}}, {"n": 77, "q": "Thi hành pháp luật là:", "opts": {"A": "Hình thức thực hiện những QPPL mang tính chất ngăn cấm bằng hành vi thụ động, trong đó các chủ thể pháp luật kiềm chế không làm những việc mà pháp luật cấm.", "B": "Hình thức thực hiện những quy định trao nghĩa vụ bắt buộc của pháp luật một cách tích cực trong đó các chủ thể thực hiện nghĩa vụ của mình bằng những hành động tích cực.", "C": "Hình thức thực hiện những quy định về quyền chủ thể của pháp luật, trong đó các chủ thể pháp luật chủ động, tự mình quyết định việc thực hiện hay không thực hiện điều mà pháp luật cho phép.", "D": "A và B đều đúng"}}, {"n": 78, "q": "Bản án đã có hiệu lực pháp luật được viện kiểm sát, tòa án có thẩm quyền kháng nghị theo thủ tục tái thẩm khi:", "opts": {"A": "Người bị kết án, người bị hại, các đương sự, người có quyền và nghĩa vụ liên quan không đồng ý với phán quyết của tòa án.", "B": "Phát hiện ra tình tiết mới, quan trọng của vụ án.", "C": "Có sự vi phạm nghiêm trọng thủ tục tố tụng, vi phạm nghiêm trọng pháp luật trong quá trình giải quyết vụ án.", "D": "Cả A, B và C đều đúng"}}, {"n": 79, "q": "Nguyên tắc \"không áp dụng hiệu lực hồi tố\" của VBPL được hiểu là:", "opts": {"A": "VBPL chỉ áp dụng trong phạm vi lãnh thổ Việt Nam.", "B": "VBPL chỉ áp dụng trong một khoảng thời gian nhất định.", "C": "VBPL không áp dụng đối với những hành vi xảy ra trước thời điểm văn bản đó có hiệu lực pháp luật.", "D": "Cả A, B và C đều đúng."}}, {"n": 80, "q": "Trong các loại VBPL, văn bản chủ đạo:", "opts": {"A": "Luôn luôn chứa đựng các QPPL", "B": "Mang tính cá biệt – cụ thể", "C": "Nêu lên các chủ trương, đường lối, chính sách", "D": "Cả A, B và C đều đúng"}}, {"n": 81, "q": "Đâu không phải là ngành luật trong HTPL Việt Nam:", "opts": {"A": "Ngành luật đất đai", "B": "Ngành luật lao động", "C": "Ngành luật quốc tế", "D": "Ngành luật đầu tư"}}, {"n": 82, "q": "Đâu không phải là ngành luật trong HTPL Việt Nam:", "opts": {"A": "Ngành luật kinh tế", "B": "Ngành luật hành chính", "C": "Ngành luật quốc tế", "D": "Ngành luật cạnh tranh"}}, {"n": 83, "q": "Chế định \"Văn hóa, giáo dục, khoa học, công nghệ\" thuộc ngành luật nào:", "opts": {"A": "Ngành luật hành chính", "B": "Ngành luật dân sự", "C": "Ngành luật quốc tế", "D": "Ngành luật nhà nước (ngành luật hiến pháp)"}}, {"n": 84, "q": "Chế định \"Giao dịch dân sự\" thuộc ngành luật nào:", "opts": {"A": "Ngành luật kinh tế", "B": "Ngành luật tài chính", "C": "Ngành luật đất đai", "D": "Ngành luật dân sự"}}, {"n": 85, "q": "Chế định \"Khởi tố bị can và hỏi cung bị can\" thuộc ngành luật nào:", "opts": {"A": "Ngành luật dân sự", "B": "Ngành luật tố tụng dân sự", "C": "Ngành luật tố tụng hình sự", "D": "Ngành luật hành chính"}}, {"n": 86, "q": "Các đặc điểm, thuộc tính của chế định pháp luật:", "opts": {"A": "Là hệ thống nhỏ trong ngành luật hoặc phân ngành luật", "B": "Là một nhóm những các QPPL có quan hệ chặt chẽ với nhau điều chỉnh một nhóm các QHXH cùng loại – những QHXH có cùng nội dung, tính chất có quan hệ mật thiết với nhau.", "C": "Cả A và B đều đúng", "D": "Cả A và B đều sai"}}, {"n": 87, "q": "Nhà nước và pháp luật là hai hiện tượng xã hội thuộc:", "opts": {"A": "Cơ sở hạ tầng", "B": "Kiến trúc thượng tầng", "C": "Quan hệ sản xuất", "D": "Lực lượng sản xuất"}}, {"n": 88, "q": "Văn bản nào có hiệu lực cao nhất trong trong số các loại văn bản sau của HTPL Việt Nam:", "opts": {"A": "Quyết định", "B": "Nghị định", "C": "Thông tư", "D": "Chỉ thị"}}, {"n": 89, "q": "Khẳng định nào là đúng:", "opts": {"A": "Nguồn của pháp luật nói chung là: VBPL.", "B": "Nguồn của pháp luật nói chung là: VBPL; tập quán pháp.", "C": "Nguồn của pháp luật nói chung là: VBPL; tập quán pháp; và tiền lệ pháp.", "D": "Cả A, B và C đều sai"}}, {"n": 90, "q": "Điều 57 Hiến pháp Việt Nam 1992 quy định \"Công dân Việt Nam có quyền kinh doanh theo quy định của pháp luật\", nghĩa là:", "opts": {"A": "Mọi công dân Việt Nam đều có quyền tự do kinh doanh theo quy định của pháp luật.", "B": "Mọi công dân Việt Nam được quyền tự do kinh doanh theo quy định của pháp luật, trừ cán bộ, công chức.", "C": "Mọi công dân Việt Nam được quyền tự do kinh doanh theo quy định của pháp luật, trừ đảng viên.", "D": "Cả A và B đều sai"}}, {"n": 91, "q": "Nhận định nào đúng:", "opts": {"A": "Kiểu pháp luật sau bao giờ cũng kế thừa kiểu pháp luật trước", "B": "Kiểu pháp luật sau bao giờ cũng tiến bộ hơn kiểu pháp luật trước", "C": "Kiểu pháp luật sau chỉ tiến bộ hơn kiểu pháp luật trước nhưng không kế thừa kiểu pháp luật trước", "D": "Cả A và B đều đúng"}}, {"n": 92, "q": "Các thuộc tính của pháp luật là:", "opts": {"A": "Tính bắt buộc chung (hay tính quy phạm phổ biến)", "B": "Tính xác định chặt chẽ về mặt hình thức", "C": "Tính được đảm bảo thực hiện bằng nhà nước", "D": "Cả A, B và C đều đúng"}}, {"n": 93, "q": "Khẳng định nào sau đây là đúng:", "opts": {"A": "Chỉ có Nhà nước mới có quyền ban hành pháp luật để quản lý xã hội.", "B": "Không chỉ nhà nước mà cả TCXH cũng có quyền ban hành pháp luật.", "C": "TCXH chỉ có quyền ban hành pháp luật khi được nhà nước trao quyền.", "D": "Cả B và C đúng"}}, {"n": 94, "q": "Hiệu lực về không gian của VBQPPL Việt Nam được hiểu là:", "opts": {"A": "Khoảng không gian trong phạm vi lãnh thổ Việt Nam trừ đi phần lãnh thổ của đại sứ quán nước ngoài và phần không gian trên tàu bè nước ngoài hoạt động trên lãnh thổ Việt Nam.", "B": "Khoảng không gian trong phạm vi lãnh thổ Việt Nam và phần lãnh thổ trong sứ quán Việt Nam tại nước ngoài, phần không gian trên tàu bè mang quốc tịch Việt Nam đang hoạt động ở nước ngoài.", "C": "Khoảng không gian trong phạm vi lãnh thổ Việt Nam và phần lãnh thổ trong sứ quán Việt Nam tại nước ngoài, phần không gian trên tàu bè mang quốc tịch Việt Nam đang hoạt động ở nước ngoài, nhưng trừ đi phần lãnh thổ của đại sứ quán nước ngoài, phần không gian trên tàu bè nước ngoài hoạt động trên lãnh thổ Việt Nam.", "D": "Cả A, B và C đều sai"}}, {"n": 95, "q": "QPPL là cách xử sự do nhà nước quy định để:", "opts": {"A": "Áp dụng cho một lần duy nhất và hết hiệu lực sau lần áp dụng đó.", "B": "Áp dụng cho một lần duy nhất và vẫn còn hiệu lực sau lần áp dụng đó.", "C": "Áp dụng cho nhiều lần và vẫn còn hiệu lực sau những lần áp dụng đó.", "D": "Áp dụng cho nhiều lần và hết hiệu lực sau những lần áp dụng đó."}}, {"n": 96, "q": "Tính xác định chặt chẽ về mặt hình thức là thuộc tính (đặc trưng) của:", "opts": {"A": "Quy phạm đạo đức", "B": "Quy phạm tập quán", "C": "QPPL", "D": "Quy phạm tôn giáo"}}, {"n": 97, "q": "Thỏa ước lao động tập thể là văn bản được ký kết giữa:", "opts": {"A": "Người lao động và người sử dụng lao động", "B": "Người sử dụng lao động và đại diện người lao động", "C": "Người lao động và đại diện người lao động", "D": "Cả A, B và C"}}, {"n": 98, "q": "Chức năng của pháp luật:", "opts": {"A": "Chức năng lập hiến và lập pháp", "B": "Chức năng giám sát tối cao", "C": "Chức năng điều chỉnh các QHXH", "D": "Cả A, B và C đều đúng"}}, {"n": 99, "q": "Chủ thể của QHPL là:", "opts": {"A": "Bất kỳ cá nhân, tổ chức nào trong một nhà nước.", "B": "Cá nhân, tổ chức được nhà nước công nhận có khả năng tham gia vào các QHPL.", "C": "Cá nhân, tổ chức cụ thể có được những quyền và mang những nghĩa vụ pháp lý nhất định được chỉ ra trong các QHPL cụ thể.", "D": "Cả A, B và C"}}, {"n": 100, "q": "Khẳng định nào đúng:", "opts": {"A": "QPPL mang tính bắt buộc chung.", "B": "Các quy phạm xã hội không phải là QPPL cũng mang tính bắt buộc chung.", "C": "Các quy phạm xã hội không phải là QPPL cũng mang tính bắt buộc nhưng không mang tính bắt buộc chung.", "D": "Cả A và C"}}];
-const ANSWERS = {"1": "A", "2": "D", "3": "D", "4": "A", "5": "A", "6": "C", "7": "A", "8": "A", "9": "D", "10": "B", "11": "A", "12": "A", "13": "A", "14": "A", "15": "A", "16": "A", "17": "C", "18": "D", "19": "A", "20": "A", "21": "B", "22": "C", "23": "A", "24": "A", "25": "A", "26": "B", "27": "C", "28": "D", "29": "A", "30": "A", "31": "B", "32": "C", "33": "B", "34": "D", "35": "B", "36": "B", "37": "C", "38": "B", "39": "D", "40": "D", "41": "B", "42": "C", "43": "B", "44": "C", "45": "B", "46": "C", "47": "D", "48": "C", "49": "D", "50": "B", "51": "A", "52": "B", "53": "C", "54": "C", "55": "D", "56": "D", "57": "D", "58": "A", "59": "D", "60": "D", "61": "B", "62": "D", "63": "D", "64": "D", "65": "C", "66": "A", "67": "D", "68": "C", "69": "D", "70": "B", "71": "B", "72": "D", "73": "A", "74": "D", "75": "A", "76": "B", "77": "B", "78": "B", "79": "C", "80": "C", "81": "D", "82": "D", "83": "D", "84": "D", "85": "C", "86": "C", "87": "B", "88": "B", "89": "C", "90": "A", "91": "B", "92": "D", "93": "A", "94": "D", "95": "C", "96": "C", "97": "B", "98": "C", "99": "C", "100": "D"};
+  // === ĐÃ CẤU HÌNH THÔNG TIN THẬT CỦA BẠN ===
+  const SPREADSHEET_ID = '15KCeZ5RJafim42c_QgTpi1AqoXAsQ-8XHAwrWcX68yw';
+  const API_KEY = 'ciMYfn0-atFwf_GzLCdEuecSgiBA0L0Wyu4V5FMA7D36CLMN8EfrMCCHlNI';
+  const SHEET_NAME = 'Users';
 
-const NAME_KEY = "pldc_quiz_name_v2";
-const ATTEMPTS_KEY = "pldc_quiz_attempts_v2";
+  let captchas = { reg: '', login: '' };
 
-/*
-  BỘ ĐẾM CHUNG:
-  - /get: đọc số hiện tại, không cộng.
-  - /hit: cộng đúng 1 lượt và trả về số mới.
-  Lượt chỉ được cộng khi người dùng hoàn thành đủ 100 câu.
-*/
-const GLOBAL_COUNTER_BASE = "https://abacus.jasoncameron.dev";
-const GLOBAL_COUNTER_NAMESPACE = "phapluatdai-cuong-100-cau";
-const GLOBAL_COUNTER_KEY = "completed-attempts";
-const GLOBAL_COUNTER_GET =
-  GLOBAL_COUNTER_BASE + "/get/" + GLOBAL_COUNTER_NAMESPACE + "/" + GLOBAL_COUNTER_KEY;
-const GLOBAL_COUNTER_HIT =
-  GLOBAL_COUNTER_BASE + "/hit/" + GLOBAL_COUNTER_NAMESPACE + "/" + GLOBAL_COUNTER_KEY;
-
-let globalAttempts = null;
-let globalCountedThisAttempt = false;
-
-let currentIndex = 0;
-let score = 0;
-let answeredCount = 0;
-let wrongAnswers = [];
-let currentAnswered = false;
-let countdownTimer = null;
-let countdownLeft = 0;
-
-const menuScreen = document.getElementById("menuScreen");
-const quizScreen = document.getElementById("quizScreen");
-const resultScreen = document.getElementById("resultScreen");
-const displayName = document.getElementById("displayName");
-const attemptCount = document.getElementById("attemptCount");
-const questionNumber = document.getElementById("questionNumber");
-const questionText = document.getElementById("questionText");
-const optionsEl = document.getElementById("options");
-const feedback = document.getElementById("feedback");
-const nextBtn = document.getElementById("nextBtn");
-const quizProgress = document.getElementById("quizProgress");
-const resultScore = document.getElementById("resultScore");
-const resultNote = document.getElementById("resultNote");
-const resultName = document.getElementById("resultName");
-const resultAttempts = document.getElementById("resultAttempts");
-const resultGlobalAttempts = document.getElementById("resultGlobalAttempts");
-const globalAttemptsEl = document.getElementById("globalAttempts");
-const wrongList = document.getElementById("wrongList");
-const nameModal = document.getElementById("nameModal");
-const nameInput = document.getElementById("nameInput");
-const modalText = document.getElementById("modalText");
-
-function getName() {
-  return localStorage.getItem(NAME_KEY) || "";
-}
-
-function getAttempts() {
-  const value = Number.parseInt(localStorage.getItem(ATTEMPTS_KEY) || "0", 10);
-  return Number.isFinite(value) && value >= 0 ? value : 0;
-}
-
-function updateAttemptsDisplay() {
-  attemptCount.textContent = getAttempts();
-  resultAttempts.textContent = getAttempts();
-}
-
-function formatNumber(value) {
-  return Number(value).toLocaleString("vi-VN");
-}
-
-function setGlobalAttempts(value) {
-  if (!Number.isFinite(Number(value))) return;
-  globalAttempts = Number(value);
-  globalAttemptsEl.textContent = formatNumber(globalAttempts);
-  resultGlobalAttempts.textContent = formatNumber(globalAttempts);
-}
-
-async function loadGlobalAttempts() {
-  try {
-    const response = await fetch(GLOBAL_COUNTER_GET, {
-      method: "GET",
-      cache: "no-store"
-    });
-    if (!response.ok) throw new Error("HTTP " + response.status);
-
-    const data = await response.json();
-    const value = Number(data.value ?? data.count ?? data.data?.value);
-
-    if (!Number.isFinite(value)) throw new Error("Dữ liệu bộ đếm không hợp lệ");
-    setGlobalAttempts(value);
-  } catch (error) {
-    console.error("Không đọc được bộ đếm chung:", error);
-    globalAttemptsEl.innerHTML =
-      "<span class='global-error'>Không tải được</span>";
-    resultGlobalAttempts.innerHTML =
-      "<span class='global-error'>Không tải được</span>";
-  }
-}
-
-async function incrementGlobalAttempts() {
-  // Không bao giờ cộng hai lần trong cùng một lượt.
-  if (globalCountedThisAttempt) return globalAttempts;
-
-  try {
-    const response = await fetch(GLOBAL_COUNTER_HIT, {
-      method: "GET",
-      cache: "no-store"
-    });
-    if (!response.ok) throw new Error("HTTP " + response.status);
-
-    const data = await response.json();
-    const value = Number(data.value ?? data.count ?? data.data?.value);
-
-    if (!Number.isFinite(value)) throw new Error("Dữ liệu bộ đếm không hợp lệ");
-
-    globalCountedThisAttempt = true;
-    setGlobalAttempts(value);
-    return value;
-  } catch (error) {
-    console.error("Không cộng được bộ đếm chung:", error);
-
-    // Vẫn giữ giao diện có thông tin rõ ràng thay vì giả số.
-    resultGlobalAttempts.innerHTML =
-      "<span class='global-error'>Không cập nhật được</span>";
-    return null;
-  }
-}
-
-function showScreen(screen) {
-  [menuScreen, quizScreen, resultScreen].forEach(s => s.classList.remove("active"));
-  screen.classList.add("active");
-  window.scrollTo({ top:0, behavior:"smooth" });
-}
-
-function openNameModal(forceNameChange = false) {
-  modalText.textContent = forceNameChange
-    ? "Nhập tên mới. Tên mới sẽ được lưu cho những lần sau."
-    : "Lần đầu vào trang, hãy nhập tên của bạn.";
-  nameInput.value = getName();
-  nameModal.classList.remove("hidden");
-  setTimeout(() => nameInput.focus(), 50);
-}
-
-function saveName() {
-  const name = nameInput.value.trim();
-  if (!name) {
-    alert("Vui lòng nhập tên.");
-    nameInput.focus();
-    return false;
-  }
-  localStorage.setItem(NAME_KEY, name);
-  displayName.textContent = name;
-  nameModal.classList.add("hidden");
-  return true;
-}
-
-function startNewAttempt() {
-  const name = getName();
-  if (!name) {
-    openNameModal(false);
-    return;
-  }
-
-  // Chỉ cộng lượt khi thực sự bấm bắt đầu một lượt mới.
-  localStorage.setItem(ATTEMPTS_KEY, String(getAttempts() + 1));
-  updateAttemptsDisplay();
-
-  currentIndex = 0;
-  score = 0;
-  answeredCount = 0;
-  wrongAnswers = [];
-  currentAnswered = false;
-  globalCountedThisAttempt = false;
-
-  showScreen(quizScreen);
-  renderQuestion();
-}
-
-function stopCountdown() {
-  if (countdownTimer) {
-    clearInterval(countdownTimer);
-    countdownTimer = null;
-  }
-  countdownLeft = 0;
-}
-
-function startCountdown() {
-  stopCountdown();
-
-  // Nếu đang ở câu cuối thì không tự chuyển sang câu khác,
-  // vẫn cho người dùng bấm "Xem kết quả".
-  if (currentIndex === QUESTIONS.length - 1) return;
-
-  countdownLeft = 5;
-  updateCountdownText();
-
-  countdownTimer = setInterval(() => {
-    countdownLeft--;
-    updateCountdownText();
-
-    if (countdownLeft <= 0) {
-      stopCountdown();
-      goNextQuestion();
+  // Tạo mã Captcha ngẫu nhiên 10 ký tự
+  function generateCaptcha(type) {
+    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let result = '';
+    for (let i = 0; i < 10; i++) {
+      result += chars.charAt(Math.floor(Math.random() * chars.length));
     }
-  }, 1000);
-}
-
-function updateCountdownText() {
-  const countdown = document.getElementById("countdown");
-  if (countdown) {
-    countdown.textContent = countdownLeft > 0 ? countdownLeft + "s" : "";
+    captchas[type] = result;
+    document.getElementById(`${type}-captcha-code`).innerText = result;
   }
-}
 
-function goNextQuestion() {
-  if (!currentAnswered) return;
-
-  stopCountdown();
-
-  if (currentIndex === QUESTIONS.length - 1) {
-    finishQuiz();
-  } else {
-    currentIndex++;
-    renderQuestion();
+  // Chuyển đổi giữa Form Đăng ký và Đăng nhập
+  function toggleAuth(type) {
+    document.getElementById('register-card').style.display = type === 'register' ? 'block' : 'none';
+    document.getElementById('login-card').style.display = type === 'login' ? 'block' : 'none';
   }
-}
 
-function renderQuestion() {
-  stopCountdown();
-  const item = QUESTIONS[currentIndex];
-  currentAnswered = false;
+  // Xử lý ĐĂNG KÝ
+  document.getElementById('register-form').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const username = document.getElementById('reg-username').value.trim();
+    const password = document.getElementById('reg-password').value;
+    const facebook = document.getElementById('reg-facebook').value.trim();
+    const captchaInput = document.getElementById('reg-captcha-input').value.trim();
 
-  questionNumber.textContent = "Câu " + item.n + " / 100";
-  questionText.textContent = item.q;
-  optionsEl.innerHTML = "";
-  feedback.className = "feedback";
-  feedback.textContent = "";
-  nextBtn.disabled = true;
-  nextBtn.textContent = currentIndex === QUESTIONS.length - 1
-    ? "Xem kết quả"
-    : "Câu tiếp theo";
-
-  ["A","B","C","D"].forEach(letter => {
-    const button = document.createElement("button");
-    button.type = "button";
-    button.className = "option";
-    button.textContent = letter + ". " + item.opts[letter];
-    button.addEventListener("click", () => chooseAnswer(letter));
-    optionsEl.appendChild(button);
-  });
-
-  updateQuizProgress();
-}
-
-function chooseAnswer(letter) {
-  if (currentAnswered) return;
-
-  currentAnswered = true;
-  const item = QUESTIONS[currentIndex];
-  const correct = ANSWERS[String(item.n)];
-  const buttons = [...optionsEl.querySelectorAll(".option")];
-
-  buttons.forEach(button => {
-    button.disabled = true;
-    const chosenLetter = button.textContent.charAt(0);
-
-    if (chosenLetter === correct) {
-      button.classList.add("correct");
+    if (captchaInput !== captchas.reg) {
+      alert('Mã Captcha không chính xác!');
+      generateCaptcha('reg');
+      return;
     }
-    if (chosenLetter === letter && letter !== correct) {
-      button.classList.add("incorrect");
+
+    try {
+      // 1. Lấy danh sách user hiện tại để kiểm tra tên trùng và tính UUID
+      const res = await fetch(`https://api.sheetson.com/v2/sheets/${SHEET_NAME}?spreadsheetId=${SPREADSHEET_ID}`, {
+        headers: {
+          'Authorization': `Bearer ${API_KEY}`,
+          'X-Spreadsheet-Id': SPREADSHEET_ID
+        }
+      });
+      const data = await res.json();
+      const users = data.results || [];
+
+      // Kiểm tra tên Artist đã tồn tại chưa
+      if (users.some(u => u.username === username)) {
+        alert('Tên Artist này đã được đăng ký!');
+        return;
+      }
+
+      // Tính UUID tự động tăng từ 10001
+      let newUuid = 10001;
+      if (users.length > 0) {
+        const lastUser = users[users.length - 1];
+        newUuid = parseInt(lastUser.uuid || 10000) + 1;
+      }
+
+      // 2. Gửi dữ liệu tài khoản mới lên Sheetson
+      const createRes = await fetch(`https://api.sheetson.com/v2/sheets/${SHEET_NAME}`, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${API_KEY}`,
+          'X-Spreadsheet-Id': SPREADSHEET_ID,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          uuid: newUuid.toString(),
+          username: username,
+          password: password,
+          facebook: facebook
+        })
+      });
+
+      if (createRes.ok) {
+        showMainPage(newUuid);
+      } else {
+        alert('Đăng ký thất bại. Vui lòng kiểm tra lại quyền chia sẻ file Google Sheet!');
+      }
+
+    } catch (err) {
+      console.error(err);
+      alert('Có lỗi kết nối đến máy chủ!');
     }
   });
 
-  answeredCount++;
+  // Xử lý ĐĂNG NHẬP
+  document.getElementById('login-form').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const username = document.getElementById('login-username').value.trim();
+    const password = document.getElementById('login-password').value;
+    const captchaInput = document.getElementById('login-captcha-input').value.trim();
 
-  if (letter === correct) {
-    score++;
-    feedback.className = "feedback show good";
-    feedback.innerHTML = "<b>ĐÚNG!</b> Bạn được +1 điểm. " +
-      (currentIndex === QUESTIONS.length - 1
-        ? "Bạn có thể bấm <b>Xem kết quả</b>."
-        : "Tự chuyển câu sau <span class='countdown' id='countdown'>5s</span>.");
-  } else {
-    wrongAnswers.push({
-      n:item.n,
-      selected:letter,
-      correct:correct
-    });
-    feedback.className = "feedback show bad";
-    feedback.innerHTML = "<b>SAI.</b> Đáp án đúng là <b>" + correct + "</b>.";
+    if (captchaInput !== captchas.login) {
+      alert('Mã Captcha không chính xác!');
+      generateCaptcha('login');
+      return;
+    }
+
+    try {
+      const res = await fetch(`https://api.sheetson.com/v2/sheets/${SHEET_NAME}?spreadsheetId=${SPREADSHEET_ID}`, {
+        headers: {
+          'Authorization': `Bearer ${API_KEY}`,
+          'X-Spreadsheet-Id': SPREADSHEET_ID
+        }
+      });
+      const data = await res.json();
+      const users = data.results || [];
+
+      const user = users.find(u => u.username === username && u.password === password);
+
+      if (user) {
+        showMainPage(user.uuid);
+      } else {
+        alert('Tên Artist hoặc Mật khẩu không đúng!');
+      }
+
+    } catch (err) {
+      console.error(err);
+      alert('Lỗi kết nối máy chủ!');
+    }
+  });
+
+  // Chuyển màn hình sau khi đăng ký / đăng nhập thành công
+  function showMainPage(uuid) {
+    document.getElementById('auth-container').style.display = 'none';
+    document.getElementById('main-page').style.display = 'block';
+    document.getElementById('user-uuid').innerText = uuid;
   }
 
-  nextBtn.disabled = false;
-  updateQuizProgress();
-
-  if (letter === correct) {
-    startCountdown();
-  }
-}
-
-function updateQuizProgress() {
-  quizProgress.textContent = "Đúng: " + score + " · Sai: " + (answeredCount - score);
-}
-
-async function finishQuiz() {
-  stopCountdown();
-  resultScore.textContent = score + " / 100 điểm";
-  resultNote.textContent =
-    "Đúng " + score + "/100 câu · Sai " + (100 - score) + "/100 câu.";
-  resultName.textContent = getName() || "—";
-  updateAttemptsDisplay();
-  resultGlobalAttempts.textContent = "Đang cộng...";
-
-  // Chỉ sau khi hoàn thành đủ 100 câu mới cộng lượt chung.
-  await incrementGlobalAttempts();
-
-  if (wrongAnswers.length === 0) {
-    wrongList.innerHTML = "<b>Hoàn thành: bạn đúng cả 100 câu.</b>";
-  } else {
-    wrongList.innerHTML =
-      "<b>Các câu trả lời sai:</b>" +
-      wrongAnswers.map(x =>
-        "<div class='wrong-item'>Câu " + x.n +
-        ": bạn chọn <b>" + x.selected +
-        "</b> · đáp án đúng <b>" + x.correct + "</b></div>"
-      ).join("");
-  }
-
-  showScreen(resultScreen);
-}
-
-nextBtn.addEventListener("click", () => {
-  goNextQuestion();
-});
-
-document.getElementById("startBtn").addEventListener("click", startNewAttempt);
-document.getElementById("newAttemptBtn").addEventListener("click", startNewAttempt);
-document.getElementById("backMenuBtn").addEventListener("click", () => {
-  stopCountdown();
-  showScreen(menuScreen);
-  loadGlobalAttempts();
-});
-document.getElementById("changeNameBtn").addEventListener("click", () => openNameModal(true));
-
-document.getElementById("saveNameBtn").addEventListener("click", () => {
-  if (saveName()) {
-    showScreen(menuScreen);
-  }
-});
-
-nameInput.addEventListener("keydown", event => {
-  if (event.key === "Enter") {
-    if (saveName()) showScreen(menuScreen);
-  }
-});
-
-// Khởi tạo.
-const savedName = getName();
-displayName.textContent = savedName || "Chưa nhập";
-updateAttemptsDisplay();
-
-loadGlobalAttempts();
-
-if (!savedName) {
-  openNameModal(false);
-}
+  // Khởi tạo captcha
+  generateCaptcha('reg');
+  generateCaptcha('login');
 </script>
+
 </body>
 </html>
